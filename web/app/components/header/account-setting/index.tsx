@@ -16,6 +16,9 @@ import {
   RiPuzzle2Fill,
   RiPuzzle2Line,
   RiTranslate2,
+  RiInstanceFill,
+  RiInstanceLine,
+
 } from '@remixicon/react'
 import Button from '../../base/button'
 import MembersPage from './members-page'
@@ -31,6 +34,7 @@ import { useProviderContext } from '@/context/provider-context'
 import { useAppContext } from '@/context/app-context'
 import MenuDialog from '@/app/components/header/account-setting/menu-dialog'
 import Input from '@/app/components/base/input'
+import BlockchainPage from "./blockchain-page";
 
 const iconClassName = `
   w-5 h-5 mr-2
@@ -99,6 +103,12 @@ export default function AccountSetting({
         name: t('custom.custom'),
         icon: <RiColorFilterLine className={iconClassName} />,
         activeIcon: <RiColorFilterFill className={iconClassName} />,
+      },
+      {
+        key: 'blockchain',
+        name: t('common.settings.blockchain'),
+        icon: <RiInstanceLine className={iconClassName} />,
+        activeIcon: <RiInstanceFill className={iconClassName} />,
       },
     ].filter(item => !!item.key) as GroupItem[]
   })()
@@ -194,12 +204,12 @@ export default function AccountSetting({
           </div>
           <div ref={scrollRef} className='w-full pb-4 bg-components-panel-bg overflow-y-auto'>
             <div className={cn('sticky top-0 mx-8 pt-[27px] pb-2 mb-[18px] flex items-center bg-components-panel-bg z-20', scrolled && 'border-b border-divider-regular')}>
-              <div className='shrink-0 text-text-primary title-2xl-semi-bold'>
-                {activeItem?.name}
-                {activeItem?.description && (
-                  <div className='mt-1 system-sm-regular text-text-tertiary'>{activeItem?.description}</div>
-                )}
-              </div>
+              <div className='shrink-0 text-text-primary title-2xl-semi-bold'>{activeItem?.name}</div>
+              {
+                activeItem?.description && (
+                  <div className='shrink-0 ml-2 text-xs text-text-tertiary'>{activeItem?.description}</div>
+                )
+              }
               {activeItem?.key === 'provider' && (
                 <div className='grow flex justify-end'>
                   <Input
@@ -220,6 +230,7 @@ export default function AccountSetting({
               {activeMenu === 'api-based-extension' && <ApiBasedExtensionPage />}
               {activeMenu === 'custom' && <CustomPage />}
               {activeMenu === 'language' && <LanguagePage />}
+              {activeMenu === 'blockchain' && <BlockchainPage />}
             </div>
           </div>
         </div>

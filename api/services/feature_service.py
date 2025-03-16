@@ -48,6 +48,7 @@ class FeatureModel(BaseModel):
     can_replace_logo: bool = False
     model_load_balancing_enabled: bool = False
     dataset_operator_enabled: bool = False
+    blockchain_enabled: bool = False
 
     # pydantic configs
     model_config = ConfigDict(protected_namespaces=())
@@ -128,6 +129,7 @@ class FeatureService:
         features.can_replace_logo = dify_config.CAN_REPLACE_LOGO
         features.model_load_balancing_enabled = dify_config.MODEL_LB_ENABLED
         features.dataset_operator_enabled = dify_config.DATASET_OPERATOR_ENABLED
+        features.blockchain_enabled = dify_config.BLOCKCHAIN_ENABLED
 
     @classmethod
     def _fulfill_params_from_billing_api(cls, features: FeatureModel, tenant_id: str):

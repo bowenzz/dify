@@ -844,6 +844,11 @@ class AccountConfig(BaseSettings):
         default=5,
     )
 
+class BlockChainSet(BaseSettings):
+    BLOCKCHAIN_ENABLED: bool = Field(
+        description="Whether blockchain integration is enabled",
+        default=True,
+    )
 
 class FeatureConfig(
     # place the configs in alphabet order
@@ -878,5 +883,6 @@ class FeatureConfig(
     # hosted services config
     HostedServiceConfig,
     CeleryBeatConfig,
+    BlockChainSet,
 ):
     pass

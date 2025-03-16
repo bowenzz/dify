@@ -40,6 +40,7 @@ type ProviderContextState = {
   enableReplaceWebAppLogo: boolean
   modelLoadBalancingEnabled: boolean
   datasetOperatorEnabled: boolean
+  blockchainEnabled: boolean
 }
 const ProviderContext = createContext<ProviderContextState>({
   modelProviders: [],
@@ -70,6 +71,7 @@ const ProviderContext = createContext<ProviderContextState>({
   enableReplaceWebAppLogo: false,
   modelLoadBalancingEnabled: false,
   datasetOperatorEnabled: false,
+  blockchainEnabled: false,
 })
 
 export const useProviderContext = () => useContext(ProviderContext)
@@ -96,6 +98,7 @@ export const ProviderContextProvider = ({
   const [enableReplaceWebAppLogo, setEnableReplaceWebAppLogo] = useState(false)
   const [modelLoadBalancingEnabled, setModelLoadBalancingEnabled] = useState(false)
   const [datasetOperatorEnabled, setDatasetOperatorEnabled] = useState(false)
+  const [blockchainEnabled, setBlockchainEnabled] = useState(false)
 
   const fetchPlan = async () => {
     const data = await fetchCurrentPlanInfo()
@@ -110,6 +113,8 @@ export const ProviderContextProvider = ({
       setModelLoadBalancingEnabled(true)
     if (data.dataset_operator_enabled)
       setDatasetOperatorEnabled(true)
+    if (data.blockchain_enabled)
+      setBlockchainEnabled(true)
   }
   useEffect(() => {
     fetchPlan()
@@ -155,6 +160,7 @@ export const ProviderContextProvider = ({
       enableReplaceWebAppLogo,
       modelLoadBalancingEnabled,
       datasetOperatorEnabled,
+      blockchainEnabled,
     }}>
       {children}
     </ProviderContext.Provider>
