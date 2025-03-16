@@ -428,11 +428,27 @@ x-shared-env: &shared-api-worker-env
   PLUGIN_PYTHON_ENV_INIT_TIMEOUT: ${PLUGIN_PYTHON_ENV_INIT_TIMEOUT:-120}
   PLUGIN_MAX_EXECUTION_TIMEOUT: ${PLUGIN_MAX_EXECUTION_TIMEOUT:-600}
   PIP_MIRROR_URL: ${PIP_MIRROR_URL:-}
+  BLOCKCHAIN_ENABLED: ${BLOCKCHAIN_ENABLED:-true}
+  BLOCKCHAIN_NAME: ${BLOCKCHAIN_NAME:-Org1}
+  BLOCKCHAIN_ORGANIZATION: ${BLOCKCHAIN_ORGANIZATION:-}
+  BLOCKCHAIN_ORGID: ${BLOCKCHAIN_ORGID:-}
+  BLOCKCHAIN_ADDRESS: ${BLOCKCHAIN_ADDRESS:-192.168.1.5}
+  BLOCKCHAIN_ALIAS: ${BLOCKCHAIN_ALIAS:-XZHMU_Consortium}
+  BLOCKCHAIN_CHANNEL: ${BLOCKCHAIN_CHANNEL:-mychannel}
+  BLOCKCHAIN_CONTRACT: ${BLOCKCHAIN_CONTRACT:-xzhmu_contract_v1}
+  BLOCKCHAIN_NETWORK: ${BLOCKCHAIN_NETWORK:-}
+  BLOCKCHAIN_USERNAME: ${BLOCKCHAIN_USERNAME:-}
+  BLOCKCHAIN_SIGNATURE: ${BLOCKCHAIN_SIGNATURE:-}
+  BLOCKCHAIN_DATADIR: ${BLOCKCHAIN_DATADIR:-}
+  BLOCKCHAIN_BASEAPI: ${BLOCKCHAIN_BASEAPI:-}
+  BLOCKCHAIN_WORKTIME: ${BLOCKCHAIN_WORKTIME:-5}
+  BLOCKCHAIN_EXTRA: ${BLOCKCHAIN_ENABLED:-}
+
 
 services:
   # API service
   api:
-    image: langgenius/dify-api:1.1.0
+    image: reg.ic.xzhmu.edu.cn/library/xzhmudify-api:1.1.0
     restart: always
     environment:
       # Use the shared environment variables.
@@ -459,7 +475,7 @@ services:
   # worker service
   # The Celery worker for processing the queue.
   worker:
-    image: langgenius/dify-api:1.1.0
+    image: reg.ic.xzhmu.edu.cn/library/xzhmudify-api:1.1.0
     restart: always
     environment:
       # Use the shared environment variables.
@@ -483,7 +499,7 @@ services:
 
   # Frontend web application.
   web:
-    image: langgenius/dify-web:1.1.0
+    image: reg.ic.xzhmu.edu.cn/library/xzhmudify-web:1.1.0
     restart: always
     environment:
       CONSOLE_API_URL: ${CONSOLE_API_URL:-}

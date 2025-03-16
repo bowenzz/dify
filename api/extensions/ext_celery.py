@@ -70,8 +70,10 @@ def init_app(app: DifyApp) -> Celery:
         "schedule.update_tidb_serverless_status_task",
         "schedule.clean_messages",
         "schedule.mail_clean_document_notify_task",
+        "schedule.blockchain_data_verify_task",
     ]
     day = dify_config.CELERY_BEAT_SCHEDULER_TIME
+    hour = dify_config.BLOCKCHAIN_WORKTIME
     beat_schedule = {
         "clean_embedding_cache_task": {
             "task": "schedule.clean_embedding_cache_task.clean_embedding_cache_task",
@@ -99,6 +101,11 @@ def init_app(app: DifyApp) -> Celery:
             "schedule": crontab(minute="0", hour="10", day_of_week="1"),
         },
     }
+    if dify_config.BLOCKCHAIN_ENABLED:
+        beat_schedule["blockchain_data_verify_task"] = {
+            "task": "schedule.blockchain_data_verify_task.blockchain_data_verify_task",
+            "schedule": timedelta(hours=hour),
+        }
     celery_app.conf.update(beat_schedule=beat_schedule, imports=imports)
 
     return celery_app

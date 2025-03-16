@@ -162,6 +162,7 @@ const translation = {
     community: '社区',
     about: '关于',
     logout: '登出',
+    blockchainDashboard: '区块链仪表板',
   },
   compliance: {
     soc2Type1: 'SOC 2 Type I Report',
@@ -184,6 +185,7 @@ const translation = {
     dataSource: '数据来源',
     plugin: '插件',
     apiBasedExtension: 'API 扩展',
+    blockchain: '区块链',
   },
   account: {
     account: '账户',
@@ -513,6 +515,8 @@ const translation = {
   environment: {
     testing: '测试环境',
     development: '开发环境',
+    onchain: '已上链',
+    offchain: '未上链',
   },
   appModes: {
     completionApp: '文本生成型应用',
@@ -648,6 +652,81 @@ const translation = {
   },
   pagination: {
     perPage: '每页显示',
+  },
+  blockchain: {
+    status: {
+        unknown: '未知',
+        enable: '开启',
+        disable: '关闭',
+        disabled: '该功能暂时无法使用。',
+        active: '状态正常',
+        invalid: '状态异常',
+    },
+    title: '区块链节点配置信息，开启上链后所有该服务器产生的数据信息将在区块链上进行存储，详情请咨询徐州医科大学数字医学研究所。',
+    link: '数字医学研究所',
+    linkUrl: 'https://mislab.vip',
+    chain: '链',
+    network: '网络',
+    address: '地址',
+    explorer: '浏览器',
+    description: '区块链信息',
+    explorerLink: '在区块浏览器中查看',
+    explorerLinkTip: '点击此处打开区块浏览器。',
+    add: '添加区块链节点',
+    edit: '编辑区块链节点',
+    delete: '删除区块链节点',
+    config: {
+        title: '区块链配置',
+        name: '区块链',
+        alias: '区块链类型',
+        address: '服务地址',
+        port: '端口',
+        organization: '机构名称',
+        contract: '智能合约',
+        network: '网络类型',
+        node_type: '节点类型',
+        channel: '通道名称',
+        close_edit: '收起编辑',
+        edit_config: '编辑配置',
+        consensus: '共识协议',
+        update: '更新配置',
+    },
+    chart:{
+        title: '统计信息',
+        explanation: '区块链节点统计信息',
+        node_amount: '节点数量',
+        block_height: '区块高度',
+        block_explanation: '数据区块累计高度',
+        tx_count: '交易数量',
+        time: '时间'
+    },
+    node:{
+        orgName: '节点名称',
+        peerName: '节点名称',
+        mspID: 'MSP ID',
+        title: '组织节点',
+        address: '节点地址',
+        port: '端口',
+        name: '名称',
+        status: '状态',
+    },
+    modal: {
+        title: '新增节点配置',
+        editTitle: '编辑节点配置',
+        name: {
+            title: '节点名称',
+            placeholder: '请输入节点',
+        },
+        apiEndpoint: {
+            title: 'Endpoint',
+            placeholder: '请输入endpoint',
+        },
+        apiKey: {
+            title: '节点地址',
+            placeholder: '请输入节点地址',
+            lengthError: '节点地址错误',
+        },
+    },
   },
 }
 

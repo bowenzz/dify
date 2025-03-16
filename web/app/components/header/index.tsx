@@ -8,6 +8,7 @@ import AccountDropdown from './account-dropdown'
 import AppNav from './app-nav'
 import DatasetNav from './dataset-nav'
 import EnvNav from './env-nav'
+import ChainNav from './chain-nav'
 import PluginsNav from './plugins-nav'
 import ExploreNav from './explore-nav'
 import ToolsNav from './tools-nav'
@@ -93,6 +94,7 @@ const Header = () => {
         )
       }
       <div className='flex items-center shrink-0'>
+        <ChainNav />
         <EnvNav />
         <div className='mr-3'>
           <PluginsNav />
