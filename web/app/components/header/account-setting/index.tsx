@@ -33,6 +33,7 @@ import { useProviderContext } from '@/context/provider-context'
 import { useAppContext } from '@/context/app-context'
 import MenuDialog from '@/app/components/header/account-setting/menu-dialog'
 import Input from '@/app/components/base/input'
+import BlockchainPage from './blockchain-page'
 
 const iconClassName = `
   w-5 h-5 mr-2
@@ -101,6 +102,12 @@ export default function AccountSetting({
         name: t('custom.custom'),
         icon: <RiColorFilterLine className={iconClassName} />,
         activeIcon: <RiColorFilterFill className={iconClassName} />,
+      },
+      {
+        key: 'blockchain',
+        name: t('common.settings.blockchain'),
+        icon: <RiInstanceLine className={iconClassName} />,
+        activeIcon: <RiInstanceFill className={iconClassName} />,
       },
     ].filter(item => !!item.key) as GroupItem[]
   })()
