@@ -18,6 +18,7 @@ const InvitationLink = ({
   const selector = useRef(`invite-link-${randomString(4)}`)
 
   const copyHandle = useCallback(() => {
+    // No prefix is needed here because the backend has already processed it
     copy(`${!value.url.startsWith('http') ? window.location.origin : ''}${value.url}`)
     setIsCopied(true)
   }, [value])

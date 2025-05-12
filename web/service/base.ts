@@ -1,4 +1,4 @@
-import { API_PREFIX, IS_CE_EDITION, PUBLIC_API_PREFIX } from '@/config'
+import { API_PREFIX, IS_CE_EDITION, PUBLIC_API_PREFIX, PUBLIC_WEB_PREFIX, WEB_PREFIX } from '@/config'
 import { refreshAccessTokenOrRelogin } from './refresh-token'
 import Toast from '@/app/components/base/toast'
 import type { AnnotationReply, MessageEnd, MessageReplace, ThoughtItem } from '@/app/components/base/chat/chat/type'
@@ -108,7 +108,7 @@ function unicodeToChar(text: string) {
 }
 
 function requiredWebSSOLogin() {
-  globalThis.location.href = `/webapp-signin?redirect_url=${globalThis.location.pathname}`
+  globalThis.location.href = `${PUBLIC_WEB_PREFIX}/webapp-signin?redirect_url=${globalThis.location.pathname}`
 }
 
 export function format(text: string) {
@@ -169,7 +169,7 @@ const handleStream = (
             try {
               bufferObj = JSON.parse(message.substring(6)) as Record<string, any>// remove data: and parse as json
             }
-            catch (e) {
+            catch {
               // mute handle message cut off
               onData('', isFirstMessage, {
                 conversationId: bufferObj?.conversation_id,
@@ -286,9 +286,9 @@ const handleStream = (
 
 const baseFetch = base
 
-export const upload = (options: any, isPublicAPI?: boolean, url?: string, searchParams?: string): Promise<any> => {
+export const upload = async (options: any, isPublicAPI?: boolean, url?: string, searchParams?: string): Promise<any> => {
   const urlPrefix = isPublicAPI ? PUBLIC_API_PREFIX : API_PREFIX
-  const token = getAccessToken(isPublicAPI)
+  const token = await getAccessToken(isPublicAPI)
   const defaultOptions = {
     method: 'POST',
     url: (url ? `${urlPrefix}${url}` : `${urlPrefix}/files/upload`) + (searchParams || ''),
@@ -323,7 +323,7 @@ export const upload = (options: any, isPublicAPI?: boolean, url?: string, search
   })
 }
 
-export const ssePost = (
+export const ssePost = async (
   url: string,
   fetchOptions: FetchOptionType,
   otherOptions: IOtherOptions,
@@ -384,12 +384,12 @@ export const ssePost = (
   if (body)
     options.body = JSON.stringify(body)
 
-  const accessToken = getAccessToken(isPublicAPI)
-  ;(options.headers as Headers).set('Authorization', `Bearer ${accessToken}`)
+  const accessToken = await getAccessToken(isPublicAPI)
+    ; (options.headers as Headers).set('Authorization', `Bearer ${accessToken}`)
 
   globalThis.fetch(urlWithPrefix, options as RequestInit)
     .then((res) => {
-      if (!/^(2|3)\d{2}$/.test(String(res.status))) {
+      if (!/^[23]\d{2}$/.test(String(res.status))) {
         if (res.status === 401) {
           refreshAccessTokenOrRelogin(TIME_OUT).then(() => {
             ssePost(url, fetchOptions, otherOptions)
@@ -466,7 +466,7 @@ export const request = async<T>(url: string, options = {}, otherOptions?: IOther
     const errResp: Response = err as any
     if (errResp.status === 401) {
       const [parseErr, errRespData] = await asyncRunSafe<ResponseError>(errResp.json())
-      const loginUrl = `${globalThis.location.origin}/signin`
+      const loginUrl = `${WEB_PREFIX}/signin`
       if (parseErr) {
         globalThis.location.href = loginUrl
         return Promise.reject(err)
@@ -498,11 +498,11 @@ export const request = async<T>(url: string, options = {}, otherOptions?: IOther
         return Promise.reject(err)
       }
       if (code === 'not_init_validated' && IS_CE_EDITION) {
-        globalThis.location.href = `${globalThis.location.origin}/init`
+        globalThis.location.href = `${WEB_PREFIX}/init`
         return Promise.reject(err)
       }
       if (code === 'not_setup' && IS_CE_EDITION) {
-        globalThis.location.href = `${globalThis.location.origin}/install`
+        globalThis.location.href = `${WEB_PREFIX}/install`
         return Promise.reject(err)
       }
 
@@ -510,7 +510,7 @@ export const request = async<T>(url: string, options = {}, otherOptions?: IOther
       const [refreshErr] = await asyncRunSafe(refreshAccessTokenOrRelogin(TIME_OUT))
       if (refreshErr === null)
         return baseFetch<T>(url, options, otherOptionsForBaseFetch)
-      if (location.pathname !== '/signin' || !IS_CE_EDITION) {
+      if (!location.pathname.includes('/signin') || !IS_CE_EDITION) {
         globalThis.location.href = loginUrl
         return Promise.reject(err)
       }

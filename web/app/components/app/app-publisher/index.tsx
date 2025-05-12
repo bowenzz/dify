@@ -24,6 +24,7 @@ import {
   PortalToFollowElemContent,
   PortalToFollowElemTrigger,
 } from '@/app/components/base/portal-to-follow-elem'
+import { WEB_PREFIX } from '@/config'
 import { fetchInstalledAppList } from '@/service/explore'
 import EmbeddedModal from '@/app/components/app/overview/embedded'
 import { useStore as useAppStore } from '@/app/components/app/store'
@@ -120,7 +121,7 @@ const AppPublisher = ({
     try {
       const { installed_apps }: any = await fetchInstalledAppList(appDetail?.id) || {}
       if (installed_apps?.length > 0)
-        window.open(`/explore/installed/${installed_apps[0].id}`, '_blank')
+        window.open(`${WEB_PREFIX}/explore/installed/${installed_apps[0].id}`, '_blank')
       else
         throw new Error('No app found in Explore')
     }
@@ -230,7 +231,7 @@ const AppPublisher = ({
               >
                 {t('workflow.common.runApp')}
               </SuggestedAction>
-              {appDetail?.mode === 'workflow'
+              {appDetail?.mode === 'workflow' || appDetail?.mode === 'completion'
                 ? (
                   <SuggestedAction
                     disabled={!publishedAt}

@@ -39,12 +39,16 @@ const OPTION_MAP = {
       `<script>
  window.difyChatbotConfig = {
   token: '${token}'${isTestEnv
-    ? `,
+        ? `,
   isDev: true`
-    : ''}${IS_CE_EDITION
-    ? `,
+        : ''}${IS_CE_EDITION
+          ? `,
   baseUrl: '${url}'`
-    : ''}
+          : ''},
+  systemVariables: {
+    // user_id: 'YOU CAN DEFINE USER ID HERE',
+    // conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
+  },
  }
 </script>
 <script
@@ -107,7 +111,7 @@ const Embedded = ({ siteInfo, isShow, onClose, appBaseUrl, accessToken, classNam
   }
 
   const navigateToChromeUrl = () => {
-    window.open('https://chrome.google.com/webstore/detail/dify-chatbot/ceehdapohffmjmkdcifjofadiaoeggaf', '_blank')
+    window.open('https://chrome.google.com/webstore/detail/dify-chatbot/ceehdapohffmjmkdcifjofadiaoeggaf', '_blank', 'noopener,noreferrer')
   }
 
   useEffect(() => {
