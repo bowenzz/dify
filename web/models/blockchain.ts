@@ -28,6 +28,7 @@ export interface BlockchainConfig {
     node_options?: options[]
     network_options?: options[]
     contract_options?: options[]
+    license?: License
 }
 
 export interface BlockchainNode {
@@ -69,3 +70,24 @@ export interface BlockchainBlockData {
     has_more: boolean;
 }
 
+export interface License {
+    title: string;
+    authorized: string;
+    content: string;
+    created: string;
+    expire: string;
+    updated: string;
+    max_num: number;
+    status: string;
+}
+
+export type BlockLicense = {
+    title: string
+    authorized: string
+    content: string
+    created: string
+    expire: string
+    updated: string
+    max_num: number
+    status: string
+}

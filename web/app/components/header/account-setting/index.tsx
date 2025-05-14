@@ -98,16 +98,16 @@ export default function AccountSetting({
         activeIcon: <RiPuzzle2Fill className={iconClassName} />,
       },
       {
-        key: (enableReplaceWebAppLogo || enableBilling) ? 'custom' : false,
-        name: t('custom.custom'),
-        icon: <RiColorFilterLine className={iconClassName} />,
-        activeIcon: <RiColorFilterFill className={iconClassName} />,
-      },
-      {
         key: 'blockchain',
         name: t('common.settings.blockchain'),
         icon: <RiInstanceLine className={iconClassName} />,
         activeIcon: <RiInstanceFill className={iconClassName} />,
+      },
+      {
+        key: (enableReplaceWebAppLogo || enableBilling) ? 'custom' : false,
+        name: t('custom.custom'),
+        icon: <RiColorFilterLine className={iconClassName} />,
+        activeIcon: <RiColorFilterFill className={iconClassName} />,
       },
     ].filter(item => !!item.key) as GroupItem[]
   })()

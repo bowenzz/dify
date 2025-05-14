@@ -10,6 +10,7 @@ import {useTranslation} from "react-i18next";
 import {updateBlockchainConfig, updateBlockchainStatus} from "@/service/blockchain";
 import {asyncRunSafe} from "@/utils";
 import {BlockchainConfig, BlockchainNodeData} from '@/models/blockchain';
+import {useModalContext} from "@/context/modal-context";
 
 const defaultConfig = {
   enabled: true,
@@ -22,6 +23,14 @@ const defaultConfig = {
   organization: "hospital",
   channel: "myChannel",
   node_name: "peer1",
+  license:{
+    authorized: null,
+    content: null,
+    created: "2025-05-12",
+    expire: "2026-12-31",
+    updated: "2025-05-12",
+    max_num: 1,
+  }
 };
 
 const contractOptions = [
@@ -56,6 +65,22 @@ export default function BlockchainConfigDisplay({ data, onUpdate }: ConfigProps)
   const [isEditing, setIsEditing] = useState(false);
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
   const { t } = useTranslation()
+
+  const { setShowLicenseModal } = useModalContext();
+
+  const handleOpenLicenseModal = () => {
+    setShowLicenseModal({
+      payload: {
+        title: t('common.blockchain.license.title'),
+        content: config?.license?.content,
+        authorized: config?.license?.authorized || config.name,
+        created: config?.license?.created,
+        updated: config?.license?.updated,
+        expire: config?.license?.expire,
+        max_num: config?.license?.max_num,
+      },
+    });
+  }
 
   useEffect(() => {
     if (data) {
@@ -129,8 +154,11 @@ export default function BlockchainConfigDisplay({ data, onUpdate }: ConfigProps)
                 <p><strong className="text-gray-700">{t('common.blockchain.config.channel')}:</strong> {channelOptions.find(option => option.value === config.channel)?.name || config.channel}</p>
                 <p><strong className="text-gray-700">{t('common.blockchain.config.network')}:</strong> {networkOptions.find(option => option.value === config.network)?.name || config.network}</p>
               </div>
-              <div className="flex justify-center">
-                <Button className="rounded-lg mt-4" onClick={() => setIsEditing(!isEditing)}>
+              <div className="flex flex-wrap justify-center gap-4 mt-4">
+                <Button className="rounded-lg" onClick={handleOpenLicenseModal}>
+                  {t('common.blockchain.config.license')}
+                </Button>
+                <Button className="rounded-lg" onClick={() => setIsEditing(!isEditing)}>
                   {isEditing ? t('common.blockchain.config.close_edit') : t('common.blockchain.config.edit_config')}
                 </Button>
               </div>

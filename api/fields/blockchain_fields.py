@@ -40,6 +40,17 @@ blockchain_contract_fields = {
     # "constructor": fields.Nested(),
 }
 
+blockchain_license_fields = {
+    "title": fields.String,
+    "authorized": fields.String,
+    "content": fields.String,
+    "created": fields.String,
+    "expire": fields.String,
+    "updated": fields.String,
+    "max_num": fields.Integer,
+    "status": fields.String,
+}
+
 blockchain_fields = {
     "enabled": fields.Boolean,
     "name": fields.String,
@@ -61,4 +72,5 @@ blockchain_fields = {
     "contract_list": fields.List(fields.Nested(blockchain_contract_fields)),
     "created_at": TimestampField,
     "updated_at": TimestampField,
+    "license": fields.Nested(blockchain_license_fields),
 }

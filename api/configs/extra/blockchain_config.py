@@ -77,4 +77,24 @@ class BlockchainConfig(BaseSettings):
         description="Blockchain extra param",
         default=None,
     )
+    BLOCKCHAIN_LICENSE_CREATED: Optional[str] = Field(
+        description="Blockchain license created",
+        default="",
+    )
+    BLOCKCHAIN_LICENSE_EXPIRE: Optional[str] = Field(
+        description="Blockchain license expires",
+        default="",
+    )
+    BLOCKCHAIN_LICENSE_UPDATED: Optional[str] = Field(
+        description="Blockchain license updated",
+        default="",
+    )
+    BLOCKCHAIN_LICENSE_MAXNUM: PositiveInt = Field(
+        description="Blockchain license max number",
+        default=1,
+    )
+    BLOCKCHAIN_LICENSE_STATUS: Optional[str] = Field(
+        description="Blockchain license status",
+        default="",
+    )
 

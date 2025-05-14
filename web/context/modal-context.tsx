@@ -8,6 +8,7 @@ import AccountSetting from '@/app/components/header/account-setting'
 import ApiBasedExtensionModal from '@/app/components/header/account-setting/api-based-extension-page/modal'
 import ModerationSettingModal from '@/app/components/base/features/new-feature-panel/moderation/moderation-setting-modal'
 import ExternalDataToolModal from '@/app/components/app/configuration/tools/external-data-tool-modal'
+import ShowLicenseModal from '@/app/components/header/account-setting/blockchain-page/modal'
 import AnnotationFullModal from '@/app/components/billing/annotation-full/modal'
 import ModelModal from '@/app/components/header/account-setting/model-provider-page/model-modal'
 import ExternalAPIModal from '@/app/components/datasets/external-api/external-api-modal'
@@ -37,6 +38,7 @@ import type { UpdatePluginPayload } from '@/app/components/plugins/types'
 import UpdatePlugin from '@/app/components/plugins/update-plugin'
 import { removeSpecificQueryParam } from '@/utils'
 import { noop } from 'lodash-es'
+import {BlockLicense} from "@/models/blockchain";
 
 export type ModalState<T> = {
   payload: T
@@ -76,6 +78,7 @@ export type ModalContextState = {
     onAutoAddPromptVariable?: (variable: PromptVariable[]) => void
   }> | null>>
   setShowUpdatePluginModal: Dispatch<SetStateAction<ModalState<UpdatePluginPayload> | null>>
+  setShowLicenseModal: Dispatch<SetStateAction<ModalState<{title: string; content: string}> | null>>
 }
 const ModalContext = createContext<ModalContextState>({
   setShowAccountSettingModal: noop,
@@ -90,6 +93,7 @@ const ModalContext = createContext<ModalContextState>({
   setShowModelLoadBalancingEntryModal: noop,
   setShowOpeningModal: noop,
   setShowUpdatePluginModal: noop,
+  setShowLicenseModal: noop,
 })
 
 export const useModalContext = () => useContext(ModalContext)
@@ -119,6 +123,7 @@ export const ModalContextProvider = ({
     onAutoAddPromptVariable?: (variable: PromptVariable[]) => void
   }> | null>(null)
   const [showUpdatePluginModal, setShowUpdatePluginModal] = useState<ModalState<UpdatePluginPayload> | null>(null)
+  const [showLicenseModal, setShowLicenseModal] = useState<ModalState<BlockLicense> | null>(null)
 
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -246,6 +251,7 @@ export const ModalContextProvider = ({
       setShowModelLoadBalancingEntryModal,
       setShowOpeningModal,
       setShowUpdatePluginModal,
+      setShowLicenseModal,
     }}>
       <>
         {children}
@@ -372,6 +378,12 @@ export const ModalContextProvider = ({
             />
           )
         }
+        {showLicenseModal && (
+          <ShowLicenseModal
+            data={showLicenseModal.payload}
+            onCancel={() => setShowLicenseModal(null)}
+          />
+        )}
       </>
     </ModalContext.Provider>
   )

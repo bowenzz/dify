@@ -43,6 +43,16 @@ class BlockchainBlockModel(BaseModel):
     tx_count : int = 0
     save_time : str = ""
 
+class BlockchainLicenseModel(BaseModel):
+    title: str = ""
+    authorized: str = ""
+    content: str = ""
+    created: str = ""
+    expire: str = ""
+    updated: str = ""
+    max_num: int = 0
+    status: str = ""
+
 class BlockchainConfigModel(BaseModel):
     enabled : bool = False
     name : str = ""
@@ -62,12 +72,20 @@ class BlockchainConfigModel(BaseModel):
     node_list : list[BlockchainNode] = []
     block_list : list[BlockchainBlockModel] = []
     contract_list : list[BlockchainContractModel] = []
+    license : BlockchainLicenseModel = None
 
 
 class BlockChainConfigService:
     @classmethod
     def get_config(cls):
         # config = BlockchainConfigModel()
+        license_info = {
+            "created": dify_config.BLOCKCHAIN_LICENSE_CREATED,
+            "expire": dify_config.BLOCKCHAIN_LICENSE_EXPIRE,
+            "updated": dify_config.BLOCKCHAIN_LICENSE_UPDATED,
+            "max_num": dify_config.BLOCKCHAIN_LICENSE_MAX_NUM,
+            "status": dify_config.BLOCKCHAIN_LICENSE_STATUS,
+        }
         config = {
             "enabled": dify_config.BLOCKCHAIN_ENABLED,
             "name": dify_config.BLOCKCHAIN_NAME,
@@ -78,7 +96,8 @@ class BlockChainConfigService:
             "channel": dify_config.BLOCKCHAIN_CHANNEL,
             "contract": dify_config.BLOCKCHAIN_CONTRACT,
             "network": dify_config.BLOCKCHAIN_NETWORK,
-            "node_list": []
+            "node_list": [],
+            "license": license_info
         }
 
         return config
