@@ -83,7 +83,7 @@ class BlockChainConfigService:
             "created": dify_config.BLOCKCHAIN_LICENSE_CREATED,
             "expire": dify_config.BLOCKCHAIN_LICENSE_EXPIRE,
             "updated": dify_config.BLOCKCHAIN_LICENSE_UPDATED,
-            "max_num": dify_config.BLOCKCHAIN_LICENSE_MAX_NUM,
+            "max_num": dify_config.BLOCKCHAIN_LICENSE_MAXNUM,
             "status": dify_config.BLOCKCHAIN_LICENSE_STATUS,
         }
         config = {

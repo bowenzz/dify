@@ -73,7 +73,7 @@ export default function BlockchainConfigDisplay({ data, onUpdate }: ConfigProps)
       payload: {
         title: t('common.blockchain.license.title'),
         content: config?.license?.content,
-        authorized: config?.license?.authorized || config.name,
+        authorized: config?.license?.authorized || config.organization,
         created: config?.license?.created,
         updated: config?.license?.updated,
         expire: config?.license?.expire,
